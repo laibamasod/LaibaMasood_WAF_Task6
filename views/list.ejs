@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>View All Students</title>
+    <!-- Font Awesome CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <ul class="  mt-5 nav nav-pills justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link active disabled" href="#">View All Students</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/student/addStudent">Add New Student</a>
+        </li>
+      </ul>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Name</th>
+                <th scope="col">Semester</th>
+                <th scope="col">Program</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% articles.forEach((article, index) => { %>
+              <tr>
+                <th scope="row"><%= index + 1 %></th>
+                <td><%= article.fullname %></td>
+                <td><%= article.semester %></td>
+                <td><%= article.program %></td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <a class="btn btn-danger" onclick="confirmDelete('<%= article._id %>')">
+                            <i class="far fa-trash-alt"></i>
+                        </a>
+                  <a class="btn btn-success" href="/student/editStudent/<%= article._id %>">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  </div>
+                </td>
+              </tr>
+
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script>
+      function confirmDelete(studentId) {
+          if (confirm('Are you sure you want to delete?')) {
+              window.location.href = `/student/delete/${studentId}`;
+          }
+      }
+  </script>
+
+    <style>
+      .container {
+        padding: 2rem 0rem;
+      }
+
+      h4 {
+        margin: 2rem 0rem 1rem;
+      }
+
+      .table-image {
+        td,
+        th {
+          vertical-align: middle;
+        }
+      }
+    </style>
+  
+    
+  </body>
+</html>

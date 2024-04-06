@@ -1,0 +1,88 @@
+const express = require('express');
+const Student = require('../model/studentModel')
+const router = express.Router();
+
+router.get("/", (req,res)=>{
+    Student.find()
+    .then((result)=>{
+        res.render("list", {articles: result})
+    })
+    .catch((err)=>{
+        console.log("Error finding results...", err);
+    })
+})
+
+router.get("/addStudent",(req,res)=>{
+    res.render("addStudent", {titleName: "Add New Student"});
+  
+})
+
+router.get("/editStudent/:id", async(req,res)=>{
+    const { id } = req.params;
+    const student = await Student.findById(id);
+    res.render("editStudent", {titleName: "Edit Student", student});
+  
+})
+
+router.post("/edit", async (req, res) => {
+    try {
+        const { id, fullname, semester, program } = req.body;
+
+        const updatedStudent = await Student.findByIdAndUpdate(
+            id,
+            { fullname, semester, program },
+            { new: true }
+
+            // The { new: true } option in this method is used to specify whether
+            //  to return the updated document or the original document as a result of the operation.
+        );
+
+        if (!updatedStudent) {
+            return res.status(404).json({ error: 'Student not found' });
+        }
+
+      
+        return res.redirect("/student"); 
+
+    } catch (error) {
+        console.error('Error updating student:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
+router.get("/delete/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedStudent = await Student.findByIdAndDelete(id);
+
+        if (!deletedStudent) {
+            return res.status(404).json({ error: 'Student not found' });
+        }
+
+       
+        return res.redirect("/student"); 
+    } catch (error) {
+        console.error('Error deleting student:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+
+router.post("/", (req,res)=>{
+    insertDocument(req,res);
+});
+
+function insertDocument(req,res){
+    const student= new Student();
+    student.fullname=req.body.fullname;
+    student.semester=req.body.semester;
+    student.program= req.body.program;
+
+    student.save().then((result)=>{
+        res.redirect("/student");
+    }).catch((err)=>{
+        console.log("ERror is writing to db",err);
+    })
+}
+module.exports = router;

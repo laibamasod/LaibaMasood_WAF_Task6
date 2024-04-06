@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Semester</th>
+              <th scope="col">Program</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% articles.forEach((article, index) => { %>
+              <tr>
+                <th scope="row"><%= index + 1 %></th>
+                <td><%= article.name %></td>
+                <td><%= article.semester %></td>
+                <td><%= article.program %></td>
+                <td>
+                  <button type="button" class="btn btn-success"><i class="fas fa-edit"></i></button>
+                  <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <style>
+  .container {
+    padding: 2rem 0rem;
+  }
+  
+  h4 {
+    margin: 2rem 0rem 1rem;
+  }
+  
+  .table-image {
+    td, th {
+      vertical-align: middle;
+    }
+  }
+  </style>
+  

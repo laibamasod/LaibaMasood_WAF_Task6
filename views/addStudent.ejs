@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>View All Students</title>
+    <!-- Font Awesome CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <ul class="  mt-5 nav nav-pills justify-content-center">
+        <li class="nav-item">
+          <a class="nav-link " href="/student">View All Students</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active disabled" href="#">Add New Student</a>
+        </li>
+      </ul>
+      <h1><%= titleName %></h1>
+
+<form action="/student" method="POST" onsubmit="return validateForm(event)">
+    <div class="mb-3">
+        <label for="fullname" class="form-label">Full Name:</label>
+        <input type="text" name="fullname" id="fullname" class="form-control" placeholder="John Smith" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="semester" class="form-label">Semester:</label>
+        <input type="number" name="semester" id="semester" class="form-control" placeholder="5" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="program" class="form-label">Program:</label>
+        <input type="text" name="program" id="program" class="form-control" placeholder="bachelors" required>
+    </div>
+
+    <input type="submit" class="btn btn-primary" value="Submit">
+</form>
+
+<script>
+function validateForm(event) {
+    const fullname = document.getElementById('fullname').value;
+    const semester = document.getElementById('semester').value;
+    const program = document.getElementById('program').value;
+
+    const nameRegex = /\d/;
+    if (nameRegex.test(fullname)) {
+        alert('Full Name should not contain numbers.');
+        event.preventDefault();
+        return false;
+    }
+
+    if (nameRegex.test(program)) {
+        alert('Program should not contain numbers.');
+        event.preventDefault();
+        return false;
+    }
+
+    if (fullname === '' || semester === '' || program === '') {
+        alert('Please fill in all fields.');
+        event.preventDefault();
+        return false;
+    }
+
+    return true;
+}
+</script>
+</body>
+</html>
